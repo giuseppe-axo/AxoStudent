@@ -6,13 +6,19 @@
 #include <asm/uaccess.h>
 
 static ssize_t axo_read(struct file * file, char * buf, 
-			  size_t count, loff_t *pos)
+			  size_t count, loff_t *curpos)
 {
 	char *axo_str = "entered axo!\n";
 	int len = strlen(axo_str); 
 
+	//per evitare letture multiple da parte di cat
+	//accettiamo solo letture da posizione iniziale
+	if (*curpos != 0) return 0;
+
+	if (copy_to_user(buf, axo_str, len)) return -EINVAL;
+
 	printk(KERN_ERR "READ function entered\n");
-	*pos = len;
+	*curpos = len;
 
 	return len;
 }
@@ -35,7 +41,7 @@ axo_init(void)
 	int ret;
 	ret = misc_register(&axo_dev);
 	if (ret)
-		printk(KERN_ERR "Unable to register \"axo, world!\" misc device\n");
+		printk(KERN_ERR "Unable to register \"axo\" misc device\n");
 	else 
 		printk(KERN_INFO "REGISTERED \"axo\" misc device\n");
 	return ret;
