@@ -1,0 +1,3 @@
+#!/bin/bash
+echo "elimino tutti i file esclusi i sorgenti primari"
+rm Module.symvers modules.order *.ko *.o *.mod.c *.exe

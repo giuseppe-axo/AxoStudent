@@ -1,0 +1,6 @@
+#!/bin/bash
+echo "compile and run user program"
+gcc -o read.exe user_read.c
+./read.exe
+
+

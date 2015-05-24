@@ -6,3 +6,6 @@ PWD   := $(shell pwd)
 
 default:
 	$(MAKE) -C $(KDIR) M=$(PWD) modules
+
+clean:
+	rm Module.symvers modules.order *.ko *.o *.mod.c

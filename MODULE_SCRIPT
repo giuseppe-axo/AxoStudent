@@ -1,0 +1,9 @@
+#!/bin/bash
+echo "build module"
+make
+echo "remove and insert module"
+sudo rmmod axo_read
+sudo insmod ./axo_read.ko
+sudo chmod 777 /dev/axo
+dmesg|tail -3
+
